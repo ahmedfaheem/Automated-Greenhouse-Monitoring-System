@@ -26,14 +26,14 @@
 #define PORTB_PIN7_DIR     OUTPUT
 
 
-#define PORTC_PIN0_DIR     INPUT
-#define PORTC_PIN1_DIR     INPUT
-#define PORTC_PIN2_DIR     INPUT
-#define PORTC_PIN3_DIR     INPUT
-#define PORTC_PIN4_DIR     INPUT
-#define PORTC_PIN5_DIR     INPUT
-#define PORTC_PIN6_DIR     INPUT
-#define PORTC_PIN7_DIR     INPUT
+#define PORTC_PIN0_DIR     OUTPUT
+#define PORTC_PIN1_DIR     OUTPUT
+#define PORTC_PIN2_DIR     OUTPUT
+#define PORTC_PIN3_DIR     OUTPUT
+#define PORTC_PIN4_DIR     OUTPUT
+#define PORTC_PIN5_DIR     OUTPUT
+#define PORTC_PIN6_DIR     OUTPUT
+#define PORTC_PIN7_DIR     OUTPUT
 
 
 #define PORTD_PIN0_DIR     INPUT
@@ -86,14 +86,14 @@ options
 #define PORTB_PIN6_INIT_VAL     LOW
 #define PORTB_PIN7_INIT_VAL     LOW
 
-#define PORTC_PIN0_INIT_VAL     HIGH
-#define PORTC_PIN1_INIT_VAL     HIGH
-#define PORTC_PIN2_INIT_VAL     HIGH
-#define PORTC_PIN3_INIT_VAL     HIGH
-#define PORTC_PIN4_INIT_VAL     HIGH
-#define PORTC_PIN5_INIT_VAL     HIGH
-#define PORTC_PIN6_INIT_VAL     HIGH
-#define PORTC_PIN7_INIT_VAL     HIGH
+#define PORTC_PIN0_INIT_VAL     LOW
+#define PORTC_PIN1_INIT_VAL     LOW
+#define PORTC_PIN2_INIT_VAL     LOW
+#define PORTC_PIN3_INIT_VAL     LOW
+#define PORTC_PIN4_INIT_VAL     LOW
+#define PORTC_PIN5_INIT_VAL     LOW
+#define PORTC_PIN6_INIT_VAL     LOW
+#define PORTC_PIN7_INIT_VAL     LOW
 								
 								
 #define PORTD_PIN0_INIT_VAL     HIGH
