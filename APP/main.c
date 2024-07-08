@@ -13,6 +13,7 @@
 #include "..\HAL\DHT11\DH_Interface.h"
 #include "..\HAL\CLCD\CLCD_interface.h"
 #include  "APP_cfg.h"
+#define   F_CPU	16000000UL
 #include <util/delay.h>
 
 typedef struct{
