@@ -24,7 +24,8 @@ void UART_TX_InterruptDisable(void);
 void UART_RX_SetCallBack(void (*LocalFptr)(void));
 void UART_TX_SetCallBack(void (*LocalFptr)(void));
 
-void UART_SendNoBlock(u8 data);
-u8 UART_ReceiveNoBlock(void);
+
+//enable globel interrupt
+# define sei()  __asm__ __volatile__ ("sei" ::)
 
 #endif /* UART_INTERFACE_H_ */

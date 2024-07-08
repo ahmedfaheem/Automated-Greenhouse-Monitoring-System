@@ -1,19 +1,23 @@
-
 #include "StdTypes.h"
-
 #include "MemMap.h"
 #include "UART_Interface.h"
-
+#include "UART_Cfg.h"
 static void(*UART_RX_Fptr)(void)=NULLPTR;
 static void(*UART_TX_Fptr)(void)=NULLPTR;
 
+#include "plant_char.h"
 
 void UART_Init(void)
 {
-	//baud rate 9600 
-	UBRRL=51;
+	//baud rate set
+	UBRRL=UBRR_VAL;
+	UBRRH=(UBRR_VAL&0xff00);
 	//normal speed
+	#if UART_SPEED_MODE==NORMAL_SPEED
 	CLR_BIT(UCSRA,U2X);
+	#elif	UART_SPEED_MODE==DOUBLE_SPEED
+	SET_BIT(UCSRA,U2X);
+	#endif
 	
 	
 	//frame (stop ,data ,parity) 1 STOP NO PARITY 8 DATA
@@ -27,16 +31,6 @@ void UART_Send(u8 data)
 {
 	while(!GET_BIT(UCSRA,UDRE));
 	UDR=data;
-}
-
-void UART_SendNoBlock(u8 data)
-{
-	UDR=data;
-}
-
-u8 UART_ReceiveNoBlock(void)
-{
-	return UDR;
 }
 
 
@@ -89,7 +83,7 @@ void UART_RX_SetCallBack(void (*LocalFptr)(void))
 
 void UART_TX_SetCallBack(void (*LocalFptr)(void))
 {
-	UART_TX_Fptr = LocalFptr;
+		UART_TX_Fptr = LocalFptr;
 }
 
 
