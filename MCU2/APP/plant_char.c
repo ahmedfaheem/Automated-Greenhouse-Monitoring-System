@@ -8,25 +8,43 @@
 #include "plant_char.h"
 #include "LCD_Int.h"
 #include "KEYPAD_Int.h"
-plant_char_t char_arr[]={
-	{TOMATOES_HUMIDITY,TOMATOES_TEMP,TOMATOES_SOIL_WATER,TOMATOES_LIGHT},
-	{CORN_HUMIDITY,CORN_TEMP,CORN_SOIL_WATER,CORN_LIGHT},
-	{WHEAT_HUMIDITY,WHEAT_TEMP,WHEAT_SOIL_WATER,WHEAT_LIGHT},
+
+
+plant_char_t max_arr[]={
+	{TOMATOES_MAX_HUMIDITY,TOMATOES_MAX_TEMP,TOMATOES_MAX_SOIL_WATER,TOMATOES_MAX_LIGHT},
+	{CORN_MAX_HUMIDITY,CORN_MAX_TEMP,CORN_MAX_SOIL_WATER,CORN_MAX_LIGHT},
+	{WHEAT_MAX_HUMIDITY,WHEAT_MAX_TEMP,WHEAT_MAX_SOIL_WATER,WHEAT_MAX_LIGHT},
 };
 
-plant_char_t  setPlantChar(plants_t plant)
+plant_char_t min_arr[]={
+	{TOMATOES_MIN_HUMIDITY,TOMATOES_MIN_TEMP,TOMATOES_MIN_SOIL_WATER,TOMATOES_MIN_LIGHT},
+	{CORN_MIN_HUMIDITY,CORN_MIN_TEMP,CORN_MIN_SOIL_WATER,CORN_MIN_LIGHT},
+	{WHEAT_MIN_HUMIDITY,WHEAT_MIN_TEMP,WHEAT_MIN_SOIL_WATER,WHEAT_MIN_LIGHT},
+};
+
+plant_char_t  setPlantMax(plants_t plant)
 {
-	plant_char_t plantChar;
-	plantChar.humidity=char_arr[plant-1].humidity;
-	plantChar.temp=char_arr[plant-1].temp;
-	plantChar.soil_water=char_arr[plant-1].soil_water;
-	plantChar.light_intensity=char_arr[plant-1].light_intensity;
-	return plantChar;
+	plant_char_t max;
+	max.humidity=max_arr[plant-1].humidity;
+	max.temp=max_arr[plant-1].temp;
+	max.soil_water=max_arr[plant-1].soil_water;
+	max.light_intensity=max_arr[plant-1].light_intensity;
+	return max;
+}
+
+plant_char_t  setPlantMin(plants_t plant)
+{
+	plant_char_t min;
+	min.humidity=min_arr[plant-1].humidity;
+	min.temp=min_arr[plant-1].temp;
+	min.soil_water=min_arr[plant-1].soil_water;
+	min.light_intensity=min_arr[plant-1].light_intensity;
+	return min;
 }
 
 plant_char_t  setCustom()
 {
-	plant_char_t plantChar;
+	plant_char_t data;
 	u8 num,digit;
 	LCD_Clear();
 	LCD_WriteString("The humidity: ");
@@ -44,7 +62,7 @@ plant_char_t  setCustom()
 		
 	}
 
-	plantChar.humidity=num;
+	data.humidity=num;
 	
 	LCD_Clear(); 
 	LCD_WriteString("The Temp: ");
@@ -59,7 +77,7 @@ plant_char_t  setCustom()
 			num = num * 10 + digit - '0';
 		}
 	}
-	plantChar.temp=num;
+	data.temp=num;
 	
 	LCD_Clear();
 	LCD_WriteString("Soil water: ");
@@ -75,7 +93,7 @@ plant_char_t  setCustom()
 		}
 	}
 	
-	plantChar.soil_water=num;
+	data.soil_water=num;
 	
 	LCD_Clear();
 	LCD_WriteString("Light intensity: ");
@@ -92,7 +110,7 @@ plant_char_t  setCustom()
 		}
 	}
 	
-	plantChar.light_intensity=num;
-	return plantChar;
+	data.light_intensity=num;
+	return data;
 }
 
