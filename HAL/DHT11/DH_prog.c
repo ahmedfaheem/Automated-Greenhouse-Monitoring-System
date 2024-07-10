@@ -1,13 +1,12 @@
 #include "DHT_Private.h"
-#include "../../Library/BIT_MATH.h"
-#include "../../Library/STD_TYPES.h"
+#include "BIT_MATH.h"
+#include "STD_TYPES.h"
 #define F_CPU 16000000UL
-
 #include <util/delay.h>
 
 #include "DH_Interface.h"
 
-#include "../../MCAL/1- DIO/DIO_interface.h"
+#include "../../MCAL/DIO/DIO_interface.h"
 enum DHT_Status_t __DHT_STATUS;
 
 

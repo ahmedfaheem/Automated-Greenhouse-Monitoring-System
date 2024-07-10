@@ -1,5 +1,5 @@
 #include "../../Library/STD_TYPES.h"
-#include "../../MCAL/5- ADC/ADC_interface.h"
+#include "../../MCAL/ADC/ADC_interface.h"
 #include "LDR_interface.h"
 #include "LDR_cfg.h"
 

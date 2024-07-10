@@ -1,5 +1,6 @@
 #include "../../Library/STD_TYPES.h"
-#include "../../MCAL/5- ADC/ADC_interface.h"
+#include "../../MCAL/ADC/ADC_interface.h"
+#define F_CPU	16000000UL
 #include <util/delay.h>
 #include "SOIL_interface.h"
 #include "SOIL_cfg.h"
@@ -16,20 +17,20 @@ uint16 SOIL_u16GetMoisture(uint16 Copy_u8ACD_Ch, uint8 Copy_u8Reading_num){
 
 		ADC_u8StartSingleConversionSynch(Copy_u8ACD_Ch, &Local_u16ADCVal);
 
-#if  SOIL_ADC_MODE == SOIL_8BIT_MODE
+		#if  SOIL_ADC_MODE == SOIL_8BIT_MODE
 
 		Local_u16Sum  += ((Local_u16ADCVal * 100UL)/255UL);
 
 
-#elif SOIL_ADC_MODE  == SOIL_10BIT_MODE
+		#elif SOIL_ADC_MODE  == SOIL_10BIT_MODE
 
 		Local_u16Sum  = ((Local_u16ADCVal * 100UL)/1023UL);
 
-#else
+		#else
 
-#error   Erro on congfiguration
+		#error   Erro on congfiguration
 
-#endif
+		#endif
 
 		_delay_ms(SOIL_READING_DELAY);
 
