@@ -44,8 +44,9 @@ void voidIrrigation();
 void voidLight();
 void voidAlert();
 void voidSendData();
+void RX_INT();
 static uint8 constrain(uint16 value, uint16 min, uint16  max);
-static _sUser_cfg_t reference;
+static _sUser_cfg_t reference={0,255,0,255,0,255,0,255};
 static sReading_t     reading;
 static uint8  u8AlertCOD = u8NO_ALERT;
 
@@ -54,41 +55,32 @@ void main(){
 	ADC_voidInit();
 	DHT_Setup();
 	USART_voidInit();
+	GIE_voidEnableGlobal();
+	UART_RX_InterruptEnable();
+	UART_RX_SetCallBack(RX_INT);
+
 	void voidLight() {
-	uint8 onTime;
-	if (reading.Level < reference.LightLevelMin) {
-		onTime=10;
-		
-		} else if (reading.Level > reference.LightLevelMax) {
-		onTime=0;
-		} else {
-		// Calculate proportional light level
-		uint16 range = reference.LightLevelMax - reference.LightLevelMin;
-		uint16 adjustedLevel = reading.Level - reference.LightLevelMin;
-		onTime = (10 * (range - adjustedLevel)) / range;
+		uint8 onTime;
+		if (reading.Level < reference.LightLevelMin) {
+			onTime=10;
+			
+			} else if (reading.Level > reference.LightLevelMax) {
+			onTime=0;
+			} else {
+			// Calculate proportional light level
+			uint16 range = reference.LightLevelMax - reference.LightLevelMin;
+			uint16 adjustedLevel = reading.Level - reference.LightLevelMin;
+			onTime = (10 * (range - adjustedLevel)) / range;
+			
+		}
+		onTime = constrain(onTime, 0, 10);
+		PWM_u8Set(10, onTime);
 		
 	}
-	onTime = constrain(onTime, 0, 10);
-	PWM_u8Set(10, onTime);
-	
-}
 
 	
-	uint8 *p;
-	uint32 num1,num2;
-	num1 = UART_u32ReceiveNumber();
-	num2 = UART_u32ReceiveNumber();
-	p=&num1;
-	reference.HumidityMax=p[0];
-	reference.TempMax=p[1];
-	reference.SoilMoistureMax=p[2];
-	reference.LightLevelMax=p[3];
 
-	p=&num2;
-	reference.HumidityMin=p[0];
-	reference.TempMin=p[1];
-	reference.SoilMoistureMin=p[2];
-	reference.LightLevelMin=p[3];
+
 	while(1){
 		reading.Level = LDR_u8GetLightLevel(ADC_u8SINGLE_ENDED_ADC1, 100);
 		reading.Soil = SOIL_u16GetMoisture(ADC_u8SINGLE_ENDED_ADC2, 40);
@@ -147,7 +139,7 @@ static uint8 constrain(uint16 value, uint16 min, uint16  max) {
 }
 
 void voidLight() {
-	uint8 onTime;
+	uint16 onTime;
 	if (reading.Level < reference.LightLevelMin) {
 		onTime=1000;
 		
@@ -195,4 +187,24 @@ void voidSendData(){
 	p[2]=reading.Soil;
 	p[3]=reading.Level;
 	UART_voidSendNumber(num);
+}
+
+
+void RX_INT()
+{
+	uint32 num1,num2;
+	uint8 *p;
+	num1 = UART_u32ReceiveNumber();
+	num2 = UART_u32ReceiveNumber();
+	p=&num1;
+	reference.HumidityMax=p[0];
+	reference.TempMax=p[1];
+	reference.SoilMoistureMax=p[2];
+	reference.LightLevelMax=p[3];
+
+	p=&num2;
+	reference.HumidityMin=p[0];
+	reference.TempMin=p[1];
+	reference.SoilMoistureMin=p[2];
+	reference.LightLevelMin=p[3];
 }
