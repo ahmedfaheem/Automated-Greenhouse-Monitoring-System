@@ -4,6 +4,10 @@
 #include "USART_reg.h"
 #include "USART_cfg.h"
 #include "USART_prv.h"
+#include "ErrType.h"
+
+static void(*UART_RX_Fptr)(void)=NULL;
+static void(*UART_TX_Fptr)(void)=NULL;
 
 
 void USART_voidInit(){
@@ -70,4 +74,55 @@ uint32 UART_u32ReceiveNumber(void){
 	b4 = USART_u8Receive();
 	Copy_u32Number = b1|(b2<<8)|((uint32)b3<<16)|((uint32)b4<<24);
 	return Copy_u32Number;
+}
+
+
+
+
+void UART_RX_InterruptEnable(void)
+{
+	SET_BIT(UCSRB,UCSRB_RXCIE);
+}
+
+void UART_RX_InterruptDisable(void)
+{
+	CLR_BIT(UCSRB,UCSRB_RXCIE);
+}
+
+void UART_TX_InterruptEnable(void)
+{
+	SET_BIT(UCSRB,UCSRB_TXCIE);
+}
+
+void UART_TX_InterruptDisable(void)
+{
+	CLR_BIT(UCSRB,UCSRB_TXCIE);
+}
+
+void UART_RX_SetCallBack(void (*LocalFptr)(void))
+{
+	UART_RX_Fptr = LocalFptr;
+}
+
+void UART_TX_SetCallBack(void (*LocalFptr)(void))
+{
+	UART_TX_Fptr = LocalFptr;
+}
+
+
+ISR(UART_RX_vect)
+{
+
+	if (UART_RX_Fptr!=NULL)
+	{
+		UART_RX_Fptr();
+	}
+}
+
+ISR(UART_TX_vect)
+{
+	if (UART_TX_Fptr!=NULL)
+	{
+		UART_TX_Fptr();
+	}
 }

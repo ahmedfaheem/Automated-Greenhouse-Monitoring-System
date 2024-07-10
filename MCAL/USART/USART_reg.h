@@ -11,10 +11,13 @@
 
 
 #define UCSRB   *((volatile uint8*)0x2A)
-
+#define UCSRB_RXCIE    7u
+#define UCSRB_TXCIE    6u
 #define UCSRB_RXEN     4u
 #define UCSRB_TXEN     3u
 #define UCSRB_UCSZ2    2u
+
+
 
 
 #define  UCSRC    *((volatile uint8*)0x40)
@@ -29,5 +32,22 @@
 
 #define UBRRH      *((volatile uint8*)0x40)
 #define UBRRL      *((volatile uint8*)0x29)
+
+
+#  define ISR_NOBLOCK    __attribute__((interrupt))
+#  define ISR_NAKED      __attribute__((naked))
+
+
+#  define ISR(vector,...)            \
+void vector (void) __attribute__ ((signal))__VA_ARGS__ ; \
+void vector (void)
+
+
+/* USART, Rx Complete */
+#define UART_RX_vect			__vector_13
+/* USART Data Register Empty */
+#define UART_UDRE_vect			__vector_14
+/* USART, Tx Complete */
+#define UART_TX_vect			__vector_15
 
 #endif
