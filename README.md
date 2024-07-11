@@ -3,23 +3,33 @@ This project ‏demonstrates‏ the implementation of a automated greenhouse mon
 
 # Features
 • Choose the plant you want to grow or customize the weather you want.
-    i. Tomatoes.
-   ii. Corn.
-  iii. Wheat.
-   iv. Custom.
+   
+   i. Tomatoes.
+   
+  ii. Corn.
+   
+ iii. Wheat.
+  
+  iv. Custom.
 
 • Measure some current information.
-    i. Humidity.
-   ii. Temperature.
-  iii. Soil water.
-   iv. Light intensity.
+   
+   i. Humidity.
+   
+  ii. Temperature.
+  
+ iii. Soil water.
+  
+  iv. Light intensity.
 
 • Display current information on the LCD.
 
 • Alert if weather was not suitable and and the system will run to improve it.
+  
    Buzzer will work and LCD will write the problem.
 
 # Usage
+   
    To use the system you can only interact with the LCD and the keypad.
 
 # Screenshot
