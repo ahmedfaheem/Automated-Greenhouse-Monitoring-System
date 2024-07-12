@@ -31,5 +31,10 @@ This project ‏demonstrates‏ the implementation of a automated greenhouse mon
 
 
 # Screenshot
-![Screenshot 2024-07-11 214457](https://github.com/user-attachments/assets/44612794-23de-4c75-96b1-3a0c8fd4e97e)
+![proteus screen](https://github.com/user-attachments/assets/44612794-23de-4c75-96b1-3a0c8fd4e97e)
+
+# Video
+
+
+https://github.com/user-attachments/assets/4883f602-c62e-4876-9205-41ab427d51b8
 
