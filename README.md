@@ -1,1 +1,0 @@
-# Automated-Greenhouse-Monitoring-System
