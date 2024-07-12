@@ -58,25 +58,7 @@ void main(){
 	GIE_voidEnableGlobal();
 	UART_RX_InterruptEnable();
 	UART_RX_SetCallBack(RX_INT);
-
-	void voidLight() {
-		uint8 onTime;
-		if (reading.Level < reference.LightLevelMin) {
-			onTime=10;
-			
-			} else if (reading.Level > reference.LightLevelMax) {
-			onTime=0;
-			} else {
-			// Calculate proportional light level
-			uint16 range = reference.LightLevelMax - reference.LightLevelMin;
-			uint16 adjustedLevel = reading.Level - reference.LightLevelMin;
-			onTime = (10 * (range - adjustedLevel)) / range;
-			
-		}
-		onTime = constrain(onTime, 0, 10);
-		PWM_u8Set(10, onTime);
-		
-	}
+	
 
 	
 
@@ -106,7 +88,8 @@ void voidFan(void){
 
 	if(reading.Temp > reference.TempMax){
 		DIO_u8SetPinValue(u8FAN_PORT,u8FAN_PIN, DIO_u8PIN_HIGH);
-		}else{
+		}else if(reading.Temp <  (reference.TempMax+reference.TempMin)/2)
+		{
 		DIO_u8SetPinValue(u8FAN_PORT,u8FAN_PIN, DIO_u8PIN_LOW);
 	}
 
@@ -116,7 +99,8 @@ void voidHeater(void){
 
 	if(reading.Temp < reference.TempMin){
 		DIO_u8SetPinValue(u8HEATER_PORT,u8HEATER_PIN, DIO_u8PIN_HIGH);
-		}else{
+		}else if(reading.Temp > (reference.TempMax+reference.TempMin)/2)
+		{
 		DIO_u8SetPinValue(u8HEATER_PORT,u8HEATER_PIN, DIO_u8PIN_LOW);
 	}
 
@@ -127,15 +111,9 @@ void voidIrrigation(){
 
 	if(reading.Soil < reference.SoilMoistureMin){
 		DIO_u8SetPinValue(u8IRRIGATION_PORT,u8IRRIGATION_PIN, DIO_u8PIN_HIGH);
-		}else if(reading.Soil > reference.SoilMoistureMax){
+		}else if(reading.Soil >= reference.SoilMoistureMax){
 		DIO_u8SetPinValue(u8IRRIGATION_PORT,u8IRRIGATION_PIN, DIO_u8PIN_LOW);
 	}
-}
-
-static uint8 constrain(uint16 value, uint16 min, uint16  max) {
-	if (value < min) return min;
-	if (value > max) return max;
-	return value;
 }
 
 void voidLight() {
@@ -152,7 +130,7 @@ void voidLight() {
 		onTime = (1000 * (range - adjustedLevel)) / range;
 		
 	}
-	onTime = constrain(onTime, 0, 1000);
+
 	PWM_u8Set(1000, onTime);
 	
 }
