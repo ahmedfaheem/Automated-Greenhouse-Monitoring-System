@@ -12,23 +12,23 @@ static void (*Schedule_vCallBackFunc)(void) = NULL;
 static Schedule_Iteration_t Schedule_enPeriodcOrOnce = ONCE;
 static uint32 Schedule_u32CountCompare  =0;
 
-uint8 PWM_u8Set(uint16 Copy_u16Period_ms,uint16 Copy_u16ONTime_ms){
+uint8 PWM_u8Set(uint16 Copy_u16Period_us,uint16 Copy_u16ONTime_us){
 	uint8 Local_u8ErrState = OK;
 
-	if(Copy_u16ONTime_ms <= Copy_u16Period_ms){
+	if(Copy_u16ONTime_us <= Copy_u16Period_us){
 
 		TIMER1_cfg_t Local_sTimer1_Cfg = {
 				.WFG_Mode=T1_FAST_PWM_TOP_ICR1,
 				.OC1A_Opt = T1_OC1A_FAST_PWM_CLRON_COM_SETON_TOP,
 				.OC1B_Opt = T1_OC1B_DISCONNECT,
-				.Prescaler = TIMER_PRESCALER_DIVISION_256,
+				.Prescaler = TIMER2_PRESCALER_DIVISION_8,
 				.ICU_Trigger_Opt = T1_ICU_NONE,
 				.ICU_Noise_State = T1_ICU_DISABLED_NOISE_CANCELER,
 				.INT_State = T1_INT_DISABLED
 		};
 
-		uint16  Local_u16TopVal =(uint16)((((uint32)Copy_u16Period_ms))/ PWM_SYSTEM_FREQENCY_ON_MHz);
-		uint16  Local_u16CompareVal =(uint16)((((uint32)Copy_u16ONTime_ms))/ PWM_SYSTEM_FREQENCY_ON_MHz);
+		uint16  Local_u16TopVal =(uint16)((((uint32)Copy_u16Period_us))*32/ PWM_SYSTEM_FREQENCY_ON_MHz)-1;
+		uint16  Local_u16CompareVal =(uint16)((((uint32)Copy_u16ONTime_us))*32/ PWM_SYSTEM_FREQENCY_ON_MHz)-1;
 
 		TIMER1_u8Init(&Local_sTimer1_Cfg);
 
