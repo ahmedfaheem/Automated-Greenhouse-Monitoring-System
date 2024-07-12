@@ -122,7 +122,7 @@ void voidLight() {
 		onTime=1000;
 		
 		} else if (reading.Level > reference.LightLevelMax) {
-		onTime=0;
+		onTime=1;
 		} else {
 		// Calculate proportional light level
 		uint16 range = reference.LightLevelMax - reference.LightLevelMin;
